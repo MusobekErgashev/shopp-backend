@@ -3,7 +3,7 @@ const cors = require('cors');
 const productRoutes = require('./routes/products');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;  // Use environment port for deployment
 
 // Middleware
 app.use(cors()); // Frontend bilan ishlash uchun CORS yoqildi
