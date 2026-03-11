@@ -1,9 +1,7 @@
-const { v4: uuidv4 } = require('uuid');
 const initialProducts = require('../data/products');
 
-// Ma'lumotlar xotirada saqlanadi (database o'rniga)
-// Server qayta ishga tushganda boshlang'ich ma'lumotlar tiklanadi
 let products = [...initialProducts];
+let nextId = 1;
 
 const ProductModel = {
   // Barcha mahsulotlarni olish
@@ -52,13 +50,13 @@ const ProductModel = {
 
   // ID bo'yicha bitta mahsulot
   getById: (id) => {
-    return products.find(p => p.id === id) || null;
+    return products.find(p => p.id === Number(id)) || null;
   },
 
   // Yangi mahsulot qo'shish
   create: (productData) => {
     const newProduct = {
-      id: uuidv4(),
+      id: nextId++,
       createdAt: new Date().toISOString(),
       title: productData.title,
       description: productData.description || '',
@@ -72,7 +70,7 @@ const ProductModel = {
 
   // Mahsulotni yangilash (to'liq)
   update: (id, productData) => {
-    const index = products.findIndex(p => p.id === id);
+    const index = products.findIndex(p => p.id === Number(id));
     if (index === -1) return null;
 
     products[index] = {
@@ -89,7 +87,7 @@ const ProductModel = {
 
   // Mahsulotni o'chirish
   delete: (id) => {
-    const index = products.findIndex(p => p.id === id);
+    const index = products.findIndex(p => p.id === Number(id));
     if (index === -1) return false;
     products.splice(index, 1);
     return true;
